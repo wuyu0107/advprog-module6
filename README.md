@@ -8,4 +8,11 @@ In the main function, the ```TcpListener``` binds the server to the desired IP a
 
 In ```handle_connection``` function, the BufReader wraps the TcpStream in a buffered reader for efficient line-by-line reading. The reader will read all the lines until an empty line, and collects the request lines into a ```Vec<String>```.  Then the function prints the request to the console. 
 
+### Commit 2 Reflection Notes
 
+Result:
+![commits 2 screen](/assets/images/commit2-1.png)
+
+The ```handle_connection``` function now can send an HTTP response back to the client instead of being able to just printing the request. 
+
+Now after reading the incoming request using a buffered reader, it defines a HTTP status 200, to indicate the client that request is successful. The function then reads the content of the file ```hello.html``` into a string and gets the length of the file content. Then it formats the HTTP Response to construct a valid HTTP response. Then by ```stream.write_all()```, it converts the response to bytes and writes it to the TCP stream, sending it back to the client. 
