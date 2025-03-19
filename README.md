@@ -32,3 +32,7 @@ First, the new code check with the request:
 If we open window 1(```127.0.0.1/sleep```) first then window 2(```127.0.0.1/```), we can see that the server pauses for 10 seconds before sending a response. We can also see that window 2 also delays its reponse instead of loading immediately. 
 
 This happens of the server being a single-threaded, meaning it can only handle one request at a time. The ```TcpListener::incoming()``` loop processes one connection at a time and when a request to ```/sleep``` comes int, the server executes the ```thread::sleep(Duration::from_secs(10))```, which will stop the entire server for 10 seconds, not allowing any other requests to be handled. 
+
+### Commit 5 Reflection Notes
+
+To make our server a multi-threaded server, we use a Threadpool, so that the server can handle multiple requests at the same time. Since Threadpool uses a limited number of workers, it will prevent the server from being overwhelmed by big load. It is done by creating a ```Threadpool``` struct in a separate new file ```thread_pool.rs```.  
