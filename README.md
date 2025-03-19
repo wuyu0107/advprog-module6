@@ -35,4 +35,6 @@ This happens of the server being a single-threaded, meaning it can only handle o
 
 ### Commit 5 Reflection Notes
 
-To make our server a multi-threaded server, we use a Threadpool, so that the server can handle multiple requests at the same time. Since Threadpool uses a limited number of workers, it will prevent the server from being overwhelmed by big load. It is done by creating a ```Threadpool``` struct in a separate new file ```thread_pool.rs```.  
+To make our server a multi-threaded server, we use a Threadpool, so that the server can handle multiple requests at the same time. Since Threadpool uses a limited number of workers, it will prevent the server from being overwhelmed by big load. It is done by creating a ```Threadpool``` struct in a separate new file ```thread_pool.rs```. 
+
+Thread pool works by initializing a fixed number of threads, and incoming requests are placed in a queue. Available worker threads will pick up tasks from the queue and execute them. When a work finishes a task, it returns to the pool and waits for the next task. If all worker threads are busy, the requests will wait in the queue until a work becomes available. 
